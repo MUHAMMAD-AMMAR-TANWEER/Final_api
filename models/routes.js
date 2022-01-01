@@ -84,7 +84,7 @@ router.post("/addDevice", async (req, res) => {
     } else {
       const newPost = new Post({
         Device: req.body.Device,
-        customer:{email: customer.email, password: customer.password},
+        customer: 
       });
 
       newPost
@@ -95,13 +95,14 @@ router.post("/addDevice", async (req, res) => {
         .catch((err) =>
           res
             .status(400)
-            .send({ message: "Can register One-device per account now"+err })
+            .send({ message: "Can register One-device per account now" + err })
         );
     }
   });
 });
 
 router.post("/addPattern", async (req, res) => {
+  console.log(req.body)
   if (!req.body.Device) {
     res.status(400).send({ message: "Please enter Device Name" });
     return;
