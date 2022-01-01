@@ -84,7 +84,7 @@ router.post("/addDevice", async (req, res) => {
     } else {
       const newPost = new Post({
         Device: req.body.Device,
-        customer: 
+        customer
       });
 
       newPost
