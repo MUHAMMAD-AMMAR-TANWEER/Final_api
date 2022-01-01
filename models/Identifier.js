@@ -90,18 +90,18 @@ const Identifier = mongoose.model(
             Pattern1: {
                 type: String,
                 default: "Pattern1",
-                unique: true
+
             },
             Pattern2: {
                 type: String,
                 default: "Pattern2",
-                unique: true
+
             },
 
             Pattern3: {
                 type: String,
                 default: "Pattern3",
-                unique: true
+
             },
 
         },
