@@ -129,14 +129,11 @@ const Identifier = mongoose.model(
                     default: false
                 },
                 Day: {
-                    type: [String],
+                    type: [],
                     default: []
                 },
 
-                flag: {
-                    type: String,
-                    default: ""
-                },
+
 
             },
 
@@ -164,14 +161,11 @@ const Identifier = mongoose.model(
                     default: false
                 },
                 Day: {
-                    type: [String],
+                    type: [],
                     default: []
                 },
 
-                flag: {
-                    type: String,
-                    default: ""
-                },
+
 
             },
 
@@ -199,14 +193,11 @@ const Identifier = mongoose.model(
                 },
 
                 Day: {
-                    type: [String],
+                    type: [],
                     default: []
                 },
 
-                flag: {
-                    type: String,
-                    default: ""
-                },
+
 
 
             }

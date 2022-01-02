@@ -235,6 +235,7 @@ router.post("/addSchedule", async (req, res) => {
     const updating_pattern = await Post.findOneAndUpdate(
       {
         Device: req.body.Device,
+
       },
       {
         $set: {
