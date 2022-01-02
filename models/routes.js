@@ -232,7 +232,7 @@ router.post("/addSchedule", async (req, res) => {
   }
 
   if (req.body.Pattern == "pattern1") {
-    const updating_pattern = await Post.updateOne(
+    const updating_pattern = await Post.findOneAndUpdate(
       {
         Device: req.body.Device,
       },
@@ -245,6 +245,9 @@ router.post("/addSchedule", async (req, res) => {
           "Schedule.Schedule1.Day": req.body.Day,
           "Schedule.Schedule1.Status": req.body.Status,
         },
+      },
+      {
+        new: true
       }
     )
       .then((updating_pattern) => {
