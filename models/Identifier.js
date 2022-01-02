@@ -35,11 +35,11 @@ const Identifier = mongoose.model(
                     type: Number,
                     default: 0,
                 },
-                Ypos1: {
+                Ypos2: {
                     type: Number,
                     default: 0,
                 },
-                Ypos1: {
+                Ypos2: {
                     type: Number,
                     default: 0,
                 },
