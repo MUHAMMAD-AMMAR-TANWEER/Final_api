@@ -93,13 +93,40 @@ router.post("/addDevice", async (req, res) => {
           res.status(200).send({ message: "Device Registered" });
         })
         .catch((err) =>
-          res
-            .status(400)
-            .send({ message: "Can register One-device per account now" + err })
+          res.status(400).send({ message: "Something went wrong" })
         );
+
     }
   });
 });
+
+
+router.put("/addDeviceu", async (req, res) => {
+  if (!req.body.Device) {
+    res.status(400).send({ message: "Please enter Device Name" });
+    return;
+  }
+
+  const customer = await Customer.findOne({
+    email: req.body.email,
+  }).then((customer) => {
+    console.log(customer)
+    if (!customer) {
+      res.status(400).send("Please first SignUP");
+    } else {
+      console.log(customer._id)
+      Post.findOneAndUpdate({ "customer.email": req.body.email }, { Device: req.body.Device }, { new: true })
+        .then((newPost) => {
+          res.status(200).send({ message: "Device Registered" });
+        })
+        .catch((err) =>
+          res.status(400).send({ message: "Something went wrong" })
+        );
+
+    }
+  });
+});
+
 
 router.post("/addPattern", async (req, res) => {
   console.log(req.body)
