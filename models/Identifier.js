@@ -78,6 +78,8 @@ const Identifier = mongoose.model(
                     type: [],
                     default: [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180]
                 },
+            },
+
             lenth_array :{
                 len1:{
                     type:Number,
@@ -93,7 +95,6 @@ const Identifier = mongoose.model(
                 }
             }
 
-            }
 
 
 
