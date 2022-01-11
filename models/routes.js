@@ -153,6 +153,7 @@ router.post("/addPattern", async (req, res) => {
         $set: {
           "pos.X_cord.X_cord1": req.body.x,
           "pos.Y_cord.Y_cord1": req.body.y,
+          "pos.lenth_array.len1": req.body.len,
         },
       }
     )
@@ -173,6 +174,7 @@ router.post("/addPattern", async (req, res) => {
         $set: {
           "pos.X_cord.X_cord2": req.body.x,
           "pos.Y_cord.Y_cord2": req.body.y,
+          "pos.lenth_array.len2": req.body.len,
         },
       }
     )
@@ -193,6 +195,7 @@ router.post("/addPattern", async (req, res) => {
         $set: {
           "pos.X_cord.X_cord3": req.body.x,
           "pos.Y_cord.Y_cord3": req.body.y,
+          "pos.lenth_array.len3": req.body.len,
         },
       }
     )
