@@ -123,9 +123,19 @@ const Identifier = mongoose.model(
         Schedule: {
             Schedule1: {
                 Date: {
-                    type: String,
-                    default: Date.now()
-                },
+                    Year:{
+                        type:String,
+                        default:""
+                   },
+                   Month:{
+                       type:String,
+                       default:""
+                   },
+                   Day:{
+                        type:String,
+                        default:""
+                   }
+                },      
 
                 Start_Time: {
                     type: String,
@@ -155,8 +165,18 @@ const Identifier = mongoose.model(
 
             Schedule2: {
                 Date: {
-                    type: String,
-                    default: Date.now()
+                    Year:{
+                        type:String,
+                        default:""
+                   },
+                   Month:{
+                       type:String,
+                       default:""
+                   },
+                   Day:{
+                        type:String,
+                        default:""
+                   }
                 },
 
                 Start_Time: {
@@ -186,8 +206,19 @@ const Identifier = mongoose.model(
 
             Schedule3: {
                 Date: {
-                    type: String,
-                    default: Date.now()
+                    Year:{
+                        type:String,
+                        default:""
+                   },
+                   Month:{
+                       type:String,
+                       default:""
+                   },
+                   Day:{
+                        type:String,
+                        default:""
+                   }
+
                 },
 
                 Start_Time: {

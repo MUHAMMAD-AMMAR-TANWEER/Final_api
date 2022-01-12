@@ -234,6 +234,11 @@ router.post("/addSchedule", async (req, res) => {
     return;
   }
 
+  if (!req.body.Pattern) {
+    res.status(400).send({ message: "Sound" });
+    return;
+  }
+
   if (req.body.Pattern == "pattern1") {
     const updating_pattern = await Post.findOneAndUpdate(
       {
