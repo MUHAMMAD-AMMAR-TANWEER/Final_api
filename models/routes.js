@@ -3,8 +3,10 @@ const Post = require("./Identifier"); // new
 const router = express.Router();
 
 const Customer = require("./Customer").Customer;
-
 const d = new Date();
+let currentDate = d.getFullYear() + d.getMonth() + d.getDate();
+let now_time = d.getHours()*3600 + d.getMinutes()*60 + d.getSeconds();
+let presentDay = d.getDay();
 
 router.get("/data/:Device", async (req, res) => {
   try {
@@ -12,12 +14,194 @@ router.get("/data/:Device", async (req, res) => {
       { Device: req.params.Device },
       { customer: 0 }
     );
+
     res.send(post);
   } catch {
     res.status(404);
     res.send({ error: "Post doesn't exist!" });
   }
 });
+
+//schedule1 logic
+
+router.put("/Schedule1" , async (req, res) =>{
+    if (!req.body.Device) {
+      res.status(200).send({message : "Please"});
+      return;
+    }
+    const schedule = await Post.findOne({
+      Device: req.body.Device,
+    }).then((schedule) => {
+
+      if (!schedule){
+        res.status(400).send("Something went wrong");
+      }
+      else {
+          // + Number(schedule(["Schedule"]["Schedule1"]["Date"]["Day"])) + Number(schedule(["Schedule"]["Schedule1"]["Date"]["Month"]));
+        const strTime = Number(schedule["Schedule"]["Schedule1"]["Start_Time"]);
+        const endTime = Number(schedule["Schedule"]["Schedule1"]["End_Time"]);
+        const timeToRun = Number(schedule["Schedule"]["Schedule1"]["Date"]["Year"]) + Number(schedule["Schedule"]["Schedule1"]["Date"]["Month"]) + Number(schedule["Schedule"]["Schedule1"]["Date"]["Day"]) -1;
+        const status = schedule["Schedule"]["Schedule1"]["Status"];
+        const lstDays = schedule["Schedule"]["Schedule1"]["Day"];
+        console.log(endTime);
+        console.log(strTime);
+        console.log(timeToRun);
+        console.log(currentDate);
+        console.log(status);
+       //for running once 
+        if (currentDate == timeToRun && (status == false) && (now_time > strTime && now_time < endTime) || (1 == 1)){
+          Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule1.Enable": true  }, { new: true }).then((newPost) => {
+            res.status(200).send({ message: "Pattern Enabled" });
+          })
+          .catch((err) =>
+            res.status(400).send({ message: "Something went wrong" })
+          );
+        }
+        //for running every week
+        if ((status == true) && (Week_days.includes(currentDay)) && (now_time > strTime && now_time < endTime)) {
+          Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule1.Enable": true  }, { new: true }).then((newPost) => {
+            res.status(200).send({ message: "Pattern Enabled" });
+          })
+          .catch((err) =>
+            res.status(400).send({ message: "Something went wrong" })
+          );
+        }
+
+        if ((now_time > strTime && now_time < endTime)) {
+          Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule1.Enable": false  }, { new: true }).then((newPost) => {
+            res.status(200).send({ message: "Pattern Enabled" });
+          })
+          .catch((err) =>
+            res.status(400).send({ message: "Something went wrong" })
+          );
+        }
+
+      }
+  
+    
+    }
+      
+      ).catch((err) =>
+      res.status(400).send({ message: "Something went wrong" })
+    );})
+
+router.put("/Schedule3" , async (req, res) =>{
+      if (!req.body.Device) {
+        res.status(200).send({message : "Please"});
+        return;
+      }
+      const schedule = await Post.findOne({
+        Device: req.body.Device,
+      }).then((schedule) => {
+  
+        if (!schedule){
+          res.status(400).send("Something went wrong");
+        }
+        else {
+            // + Number(schedule(["Schedule"]["Schedule1"]["Date"]["Day"])) + Number(schedule(["Schedule"]["Schedule1"]["Date"]["Month"]));
+          const strTime = Number(schedule["Schedule"]["Schedule3"]["Start_Time"]);
+          const endTime = Number(schedule["Schedule"]["Schedule3"]["End_Time"]);
+          const timeToRun = Number(schedule["Schedule"]["Schedule3"]["Date"]["Year"]) + Number(schedule["Schedule"]["Schedule3"]["Date"]["Month"]) + Number(schedule["Schedule"]["Schedule3"]["Date"]["Day"]) -1;
+          const status = schedule["Schedule"]["Schedule3"]["Status"];
+          const lstDays = schedule["Schedule"]["Schedule3"]["Day"];
+
+         //for running once 
+          if (currentDate == timeToRun && (status == false) && (now_time > strTime && now_time < endTime) || (1 == 1)){
+            Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule3.Enable": true  }, { new: true }).then((newPost) => {
+              res.status(200).send({ message: "Pattern Enabled" });
+            })
+            .catch((err) =>
+              res.status(400).send({ message: "Something went wrong" })
+            );
+          }
+          //for running every week
+          if ((status == true) && (Week_days.includes(currentDay)) && (now_time > strTime && now_time < endTime)) {
+            Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule3.Enable": true  }, { new: true }).then((newPost) => {
+              res.status(200).send({ message: "Pattern Enabled" });
+            })
+            .catch((err) =>
+              res.status(400).send({ message: "Something went wrong" })
+            );
+          }
+  
+          if ((now_time > strTime && now_time < endTime)) {
+            Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule3.Enable": false  }, { new: true }).then((newPost) => {
+              res.status(200).send({ message: "Pattern Enabled" });
+            })
+            .catch((err) =>
+              res.status(400).send({ message: "Something went wrong" })
+            );
+          }
+  
+        }
+    
+      
+      }
+        
+        ).catch((err) =>
+        res.status(400).send({ message: "Something went wrong" })
+      );})
+
+
+      router.put("/Schedule2" , async (req, res) =>{
+        if (!req.body.Device) {
+          res.status(200).send({message : "Please"});
+          return;
+        }
+        const schedule = await Post.findOne({
+          Device: req.body.Device,
+        }).then((schedule) => {
+    
+          if (!schedule){
+            res.status(400).send("Something went wrong");
+          }
+          else {
+              // + Number(schedule(["Schedule"]["Schedule1"]["Date"]["Day"])) + Number(schedule(["Schedule"]["Schedule1"]["Date"]["Month"]));
+            const strTime = Number(schedule["Schedule"]["Schedule2"]["Start_Time"]);
+            const endTime = Number(schedule["Schedule"]["Schedule2"]["End_Time"]);
+            const timeToRun = Number(schedule["Schedule"]["Schedule2"]["Date"]["Year"]) + Number(schedule["Schedule"]["Schedule2"]["Date"]["Month"]) + Number(schedule["Schedule"]["Schedule2"]["Date"]["Day"]) -1;
+            const status = schedule["Schedule"]["Schedule2"]["Status"];
+            const lstDays = schedule["Schedule"]["Schedule2"]["Day"];
+
+
+           //for running once 
+            if (currentDate == timeToRun && (status == false) && (now_time > strTime && now_time < endTime) || (1 == 1)){
+              Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule2.Enable": true  }, { new: true }).then((newPost) => {
+                res.status(200).send({ message: "Pattern Enabled" });
+              })
+              .catch((err) =>
+                res.status(400).send({ message: "Something went wrong" })
+              );
+
+            }
+            //for running every week
+            if ((status == true) && (Week_days.includes(currentDay)) && (now_time > strTime && now_time < endTime)) {
+              Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule2.Enable": true  }, { new: true }).then((newPost) => {
+                res.status(200).send({ message: "Pattern Enabled" });
+              })
+              .catch((err) =>
+                res.status(400).send({ message: "Something went wrong" })
+              );
+            }
+    
+            if ((now_time > strTime && now_time < endTime)) {
+              Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule2.Enable": false  }, { new: true }).then((newPost) => {
+                res.status(200).send({ message: "Pattern Enabled" });
+              })
+              .catch((err) =>
+                res.status(400).send({ message: "Something went wrong" })
+              );
+            }
+    
+          }
+      
+        
+        }
+          
+          ).catch((err) =>
+          res.status(400).send({ message: "Something went wrong" })
+        );})
+
 
 // login API has been done
 router.post("/login/", async (req, res) => {
@@ -248,7 +432,7 @@ router.post("/addSchedule", async (req, res) => {
       {
         $set: {
           "Schedule.Schedule1.Date": req.body.Date,
-          "Schedule.Schedule1.StartTime": req.body.Start_Time,
+          "Schedule.Schedule1.Start_Time": req.body.Start_Time,
           "Schedule.Schedule1.End_Time": req.body.End_Time,
           "Schedule.Schedule1.Sound": req.body.Sound,
           "Schedule.Schedule1.Day": req.body.Day,
@@ -298,7 +482,7 @@ router.post("/addSchedule", async (req, res) => {
       {
         $set: {
           "Schedule.Schedule3.Date": req.body.Date,
-          "Schedule.Schedule3.StartTime": req.body.Start_Time,
+          "Schedule.Schedule3.Start_Time": req.body.Start_Time,
           "Schedule.Schedule3.End_Time": req.body.End_Time,
           "Schedule.Schedule3.Sound": req.body.Sound,
           "Schedule.Schedule3.Day": req.body.Day,

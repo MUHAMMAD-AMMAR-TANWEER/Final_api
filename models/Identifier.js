@@ -157,6 +157,10 @@ const Identifier = mongoose.model(
                     type: [],
                     default: []
                 },
+                Enable: {
+                    type: Boolean,
+                    default: false
+                }
 
 
 
@@ -200,6 +204,12 @@ const Identifier = mongoose.model(
                     default: []
                 },
 
+                Enable: {
+                    type: Boolean,
+                    default: false
+                }
+
+
 
 
             },
@@ -242,6 +252,12 @@ const Identifier = mongoose.model(
                     type: [],
                     default: []
                 },
+
+                Enable: {
+                    type: Boolean,
+                    default: false
+                }
+
 
 
 
