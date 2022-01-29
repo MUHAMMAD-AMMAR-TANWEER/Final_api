@@ -8,47 +8,18 @@ const Identifier = mongoose.model(
             type: String,
             default: "2324"
         },
-        initialPostion: {
-            Xpos: {
 
-                Xpos1: {
-                    type: Number,
-                    default: 0,
-                },
-                Xpos2: {
-                    type: Number,
-                    default: 0,
-                },
-                Xpos3: {
-                    type: Number,
-                    default: 0,
-                },
-
-
-
-
+        Xpos: {
+                type: Number,
+                default: 90
 
             },
-            Ypos: {
+        Ypos: {
+                type: Number,
+                default : 90
 
-                Ypos1: {
-                    type: Number,
-                    default: 0,
-                },
-                Ypos2: {
-                    type: Number,
-                    default: 0,
-                },
-                Ypos2: {
-                    type: Number,
-                    default: 0,
-                },
-
-
-
-
-            }
         },
+
         pos: {
             X_cord: {
                 X_cord1: {
@@ -149,6 +120,11 @@ const Identifier = mongoose.model(
                     type: String,
                     default: "off"
                 },
+                Speed: {
+                    type:String,
+                    default:"Medium"
+                },
+
                 Status: {
                     type: Boolean,
                     default: false
@@ -195,6 +171,11 @@ const Identifier = mongoose.model(
                     type: String,
                     default: "off"
                 },
+                Speed: {
+                    type:String,
+                    default:"Medium"
+                },
+                
                 Status: {
                     type: Boolean,
                     default: false
@@ -243,6 +224,11 @@ const Identifier = mongoose.model(
                     type: String,
                     default: "off"
                 },
+                Speed: {
+                    type:String,
+                    default:"Medium"
+                },
+                
                 Status: {
                     type: Boolean,
                     default: false

@@ -2,11 +2,14 @@ const express = require("express");
 const Post = require("./Identifier"); // new
 const router = express.Router();
 
+
 const Customer = require("./Customer").Customer;
 const d = new Date();
 let currentDate = d.getFullYear() + d.getMonth() + d.getDate();
 let now_time = d.getHours()*3600 + d.getMinutes()*60 + d.getSeconds();
 let presentDay = d.getDay();
+
+
 
 router.get("/data/:Device", async (req, res) => {
   try {
@@ -22,7 +25,80 @@ router.get("/data/:Device", async (req, res) => {
   }
 });
 
+router.get("/realtime/:Device", async (req, res) => {
+  try {
+    const post = await Post.findOne(
+      {Device: req.params.Device},
+      {customer:0, Device:0 , pos:0, Pattern_Name:0, Schedule:0}
+    );
+    res.send(post);
+  }catch {
+    res.status(404);
+    res.send({ error: "Post doesn't exist!" });
+  }
+});
+
+//real-time buttons
+
+// router.put("/setPostion" , async (req, res) => {
+//   const realTime = await Post.findOne({
+//     Device: req.body.Device,
+//   }).then(realTime) => {
+//     if (!realTime) {
+//       res.status(400).send("Device not present")
+//     }
+//   } 
+// })
+
+
 //schedule1 logic
+
+router.put("/realtime" , async (req, res) =>{
+  if (!req.body.Device){
+    res.status(200).send({message : "Please"});
+    return;
+  }
+  if (req.body.cord == "x"){
+    const updating_pattern = await Post.findOneAndUpdate(
+      {
+        Device: req.body.Device,
+      },
+      { 
+        $inc: { Xpos: req.body.shift }
+      },
+      { new: true }
+    )
+      .then((updating_pattern) => {
+        res.status(200).send({ message: "Moving laser" });
+      })
+      .catch((err) =>
+        res.status(400).send({ message: "Something went wrong" })
+      );
+  }
+
+  if (req.body.cord =="y") {
+    const updating_pattern = await Post.findOneAndUpdate(
+      {
+        Device: req.body.Device,
+      },
+      { 
+        $inc: { Ypos: req.body.shift }
+      },
+      { new: true }
+    )
+      .then((updating_pattern) => {
+        res.status(200).send({ message: "Moving laser" });
+      })
+      .catch((err) =>
+        res.status(400).send({ message: "Something went wrong" })
+      );
+  }
+
+
+});
+
+
+
 
 router.put("/Schedule1" , async (req, res) =>{
     if (!req.body.Device) {
@@ -99,9 +175,9 @@ router.put("/Schedule3" , async (req, res) =>{
         }
         else {
             // + Number(schedule(["Schedule"]["Schedule1"]["Date"]["Day"])) + Number(schedule(["Schedule"]["Schedule1"]["Date"]["Month"]));
-          const strTime = Number(schedule["Schedule"]["Schedule3"]["Start_Time"]);
-          const endTime = Number(schedule["Schedule"]["Schedule3"]["End_Time"]);
-          const timeToRun = Number(schedule["Schedule"]["Schedule3"]["Date"]["Year"]) + Number(schedule["Schedule"]["Schedule3"]["Date"]["Month"]) + Number(schedule["Schedule"]["Schedule3"]["Date"]["Day"]) -1;
+          const strTime = Number(schedule["Schedule"]["Schedule3"]["Start_Time"]);//get start time
+          const endTime = Number(schedule["Schedule"]["Schedule3"]["End_Time"]);// get end_time
+          const timeToRun = Number(schedule["Schedule"]["Schedule3"]["Date"]["Year"]) + Number(schedule["Schedule"]["Schedule3"]["Date"]["Month"]) + Number(schedule["Schedule"]["Schedule3"]["Date"]["Day"]) -1; //get_date on which needs to display
           const status = schedule["Schedule"]["Schedule3"]["Status"];
           const lstDays = schedule["Schedule"]["Schedule3"]["Day"];
 
