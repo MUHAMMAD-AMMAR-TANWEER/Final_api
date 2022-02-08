@@ -213,6 +213,9 @@ router.put("/Schedule3" , async (req, res) =>{
               res.status(400).send({ message: "Something went wrong" })
             );
           }
+          else {
+            res.status(200).send("Some thing got wrong no condition executes")
+          }
   
         }
     
