@@ -219,7 +219,7 @@ router.put("/Schedule3" , async (req, res) =>{
       );})
 
 
-      router.put("/Schedule2" , async (req, res) =>{
+router.put("/Schedule2" , async (req, res) =>{
         if (!req.body.Device) {
           res.status(200).send({message : "Please"});
           return;
