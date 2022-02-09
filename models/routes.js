@@ -9,8 +9,6 @@ let currentDate = d.getFullYear() + d.getMonth() + d.getDate();
 let now_time = d.getHours()*3600 + d.getMinutes()*60 + d.getSeconds();
 let presentDay = d.getDay();
 
-
-
 router.get("/data/:Device", async (req, res) => {
   try {
     const post = await Post.findOne(
@@ -118,12 +116,14 @@ router.put("/Schedule1" , async (req, res) =>{
         const endTime = Number(schedule["Schedule"]["Schedule1"]["End_Time"]);
         const timeToRun = Number(schedule["Schedule"]["Schedule1"]["Date"]["Year"]) + Number(schedule["Schedule"]["Schedule1"]["Date"]["Month"]) + Number(schedule["Schedule"]["Schedule1"]["Date"]["Day"]) -1;
         const status = schedule["Schedule"]["Schedule1"]["Status"];
-        const lstDays = schedule["Schedule"]["Schedule1"]["Day"];
-        console.log(endTime);
-        console.log(strTime);
-        console.log(timeToRun);
-        console.log(currentDate);
-        console.log(status);
+        const Week_days = schedule["Schedule"]["Schedule1"]["Day"];
+
+        // console.log(endTime);
+        // console.log(strTime);
+        // console.log(timeToRun);
+        // console.log(currentDate);
+        // console.log(status);
+        // console.log("tesla");
        //for running once 
         if (currentDate == timeToRun && (status == false) && (now_time > strTime && now_time < endTime) ){
           Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule1.Enable": true  }, { new: true }).then((newPost) => {
@@ -136,14 +136,16 @@ router.put("/Schedule1" , async (req, res) =>{
           console.log('if statement runs');
         }
         //for running every week
-        else if ((status == true) && (Week_days.includes(currentDay)) && (now_time > strTime && now_time < endTime)) {
+        else if ((status == true) && (Week_days.includes(presentDay)) && (now_time > strTime && now_time < endTime) ) {
           Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule1.Enable": true  }, { new: true }).then((newPost) => {
             res.status(200).send({ message: "Pattern Enabled" });
           })
           .catch((err) =>
             res.status(400).send({ message: "Something went wrong" })
           );
-          console.log('1st elseif runs');
+
+
+          // console.log(Week_days);
 
         }
 
@@ -154,7 +156,18 @@ router.put("/Schedule1" , async (req, res) =>{
           .catch((err) =>
             res.status(400).send({ message: "Something went wrong" })
           );
-          console.log('2nd elseif runs');
+
+        }
+
+        
+        else  {
+          Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule1.Enable": false  }, { new: true }).then((newPost) => {
+            res.status(200).send({ message: "Pattern Enabled" });
+          })
+          .catch((err) =>
+            res.status(400).send({ message: "Something went wrong" })
+          );
+
         }
 
       }
@@ -184,7 +197,7 @@ router.put("/Schedule3" , async (req, res) =>{
           const endTime = Number(schedule["Schedule"]["Schedule3"]["End_Time"]);// get end_time
           const timeToRun = Number(schedule["Schedule"]["Schedule3"]["Date"]["Year"]) + Number(schedule["Schedule"]["Schedule3"]["Date"]["Month"]) + Number(schedule["Schedule"]["Schedule3"]["Date"]["Day"]) -1; //get_date on which needs to display
           const status = schedule["Schedule"]["Schedule3"]["Status"];
-          const lstDays = schedule["Schedule"]["Schedule3"]["Day"];
+          const Week_days = schedule["Schedule"]["Schedule1"]["Day"];
 
          //for running once 
           if (currentDate == timeToRun && (status == false) && (now_time > strTime && now_time < endTime)){
@@ -196,7 +209,7 @@ router.put("/Schedule3" , async (req, res) =>{
             );
           }
           //for running every week
-         else if ((status == true) && (Week_days.includes(currentDay)) && (now_time > strTime && now_time < endTime)) {
+         else if ((status == true) && (Week_days.includes(presentDay)) && (now_time > strTime && now_time < endTime)) {
             Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule3.Enable": true  }, { new: true }).then((newPost) => {
               res.status(200).send({ message: "Pattern Enabled" });
             })
@@ -213,8 +226,14 @@ router.put("/Schedule3" , async (req, res) =>{
               res.status(400).send({ message: "Something went wrong" })
             );
           }
-          else {
-            res.status(200).send("Some thing got wrong no condition executes")
+
+          else  {
+            Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule3.Enable": false  }, { new: true }).then((newPost) => {
+              res.status(200).send({ message: "Pattern Enabled" });
+            })
+            .catch((err) =>
+              res.status(400).send({ message: "Something went wrong" })
+            );
           }
   
         }
@@ -245,7 +264,7 @@ router.put("/Schedule2" , async (req, res) =>{
             const endTime = Number(schedule["Schedule"]["Schedule2"]["End_Time"]);
             const timeToRun = Number(schedule["Schedule"]["Schedule2"]["Date"]["Year"]) + Number(schedule["Schedule"]["Schedule2"]["Date"]["Month"]) + Number(schedule["Schedule"]["Schedule2"]["Date"]["Day"]) -1;
             const status = schedule["Schedule"]["Schedule2"]["Status"];
-            const lstDays = schedule["Schedule"]["Schedule2"]["Day"];
+            const Week_days = schedule["Schedule"]["Schedule1"]["Day"];
 
 
            //for running once 
@@ -259,7 +278,7 @@ router.put("/Schedule2" , async (req, res) =>{
 
             }
             //for running every week
-            else if ((status == true) && (Week_days.includes(currentDay)) && (now_time > strTime && now_time < endTime)) {
+            else if ((status == true) && (Week_days.includes(presentDay)) && (now_time > strTime && now_time < endTime)) {
               Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule2.Enable": true  }, { new: true }).then((newPost) => {
                 res.status(200).send({ message: "Pattern Enabled" });
               })
@@ -269,6 +288,15 @@ router.put("/Schedule2" , async (req, res) =>{
             }
     
             else if ((now_time > strTime && now_time < endTime)) {
+              Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule2.Enable": false  }, { new: true }).then((newPost) => {
+                res.status(200).send({ message: "Pattern Enabled" });
+              })
+              .catch((err) =>
+                res.status(400).send({ message: "Something went wrong" })
+              );
+            }
+
+            else  {
               Post.findOneAndUpdate({ "Device": req.body.Device }, { "Schedule.Schedule2.Enable": false  }, { new: true }).then((newPost) => {
                 res.status(200).send({ message: "Pattern Enabled" });
               })
