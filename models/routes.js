@@ -100,7 +100,7 @@ router.put("/realtime" , async (req, res) =>{
 
 router.put("/Schedule1" , async (req, res) =>{
     if (!req.body.Device) {
-      res.status(200).send({message : "Please"});
+      res.status(404).send({message : "Please enter device name"});
       return;
     }
     const schedule = await Post.findOne({
@@ -181,7 +181,7 @@ router.put("/Schedule1" , async (req, res) =>{
 
 router.put("/Schedule3" , async (req, res) =>{
       if (!req.body.Device) {
-        res.status(200).send({message : "Please"});
+        res.status(404).send({message : "Please enter device name"});
         return;
       }
       const schedule = await Post.findOne({
@@ -248,7 +248,7 @@ router.put("/Schedule3" , async (req, res) =>{
 
 router.put("/Schedule2" , async (req, res) =>{
         if (!req.body.Device) {
-          res.status(200).send({message : "Please"});
+          res.status(404).send({message : "Please enter device"});
           return;
         }
         const schedule = await Post.findOne({
