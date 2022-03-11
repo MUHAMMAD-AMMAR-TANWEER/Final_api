@@ -36,20 +36,7 @@ router.get("/realtime/:Device", async (req, res) => {
   }
 });
 
-//real-time buttons
 
-// router.put("/setPostion" , async (req, res) => {
-//   const realTime = await Post.findOne({
-//     Device: req.body.Device,
-//   }).then(realTime) => {
-//     if (!realTime) {
-//       res.status(400).send("Device not present")
-//     }
-//   } 
-// })
-
-
-//schedule1 logic
 
 router.put("/realtime" , async (req, res) =>{
   if (!req.body.Device){

@@ -5,8 +5,8 @@ const Identifier = mongoose.model(
     "Identifier",
     new mongoose.Schema({
         Device: {
-            type: String,
-            default: "2324"
+            type: Number,
+            unique: true
         },
 
         Xpos: {
