@@ -512,10 +512,10 @@ router.post("/addSchedule", async (req, res) => {
     return;
   }
 
-  if (!req.body.Sound) {
-    res.status(400).send({ message: "Sound" });
-    return;
-  }
+//   if (!req.body.Sound) {
+//     res.status(400).send({ message: "Sound" });
+//     return;
+//   }
 
   if (!req.body.Pattern) {
     res.status(400).send({ message: "Sound" });
